@@ -1,14 +1,21 @@
-import { Alert, View } from "react-native"
+import { Alert, View, SectionList } from "react-native"
 import { Feather } from '@expo/vector-icons'
 import * as Contacts from 'expo-contacts'
 import { styles } from './styles'
 import { Input } from "@/app/components/input"
 import { theme } from "@/theme"
 import { useState, useEffect } from "react"
-import { Contact } from "@/app/components/contact"
+import { Contact, ContactProps } from "@/app/components/contact"
+
+type SectionListDataProps = {
+    title: string
+    data: ContactProps
+}
+
+const [contact, setContacts] = useState<SectionListDataProps[]>([])
 
 export function Home(){
-    const [name, setName] = useState("")
+    const [contacts, setContacts] = useState([])
 
     async function fetchContacts() {
         try {
@@ -41,10 +48,18 @@ export function Home(){
                     </Feather>
                 </Input>
             </View>
-            <Contact contact={{
-                name: "Pedroso",
-                image: require("@/assets/avatar.jpeg")
-            }} />
+            <SectionList
+                sections={[{title: "R", data: [{id: "1", name: "Heloísa"}] }]}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <Contact contact={{
+                        name: "Roberto",
+                        image: require("@/assets/avatar.jpeg")
+                    }} />    
+                )}
+                renderSectionHeader = {({ section }) => (<Text style={styles.section}>{section.title}</Text>)}
+                contentContainerStyle = {styles.contentList}
+            />
         </View>
     )
 }
