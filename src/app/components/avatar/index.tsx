@@ -4,14 +4,14 @@ import { styles } from './styles'
 
 const variants = {
     size: {
-        medium: {whidth: 54, height: 54,
+        medium: {width: 54, height: 54,
         borderRadius: 18},
-        large: {whidth: 100, height: 100,
+        large: {width: 100, height: 100,
         borderRadiu: 32},
     },
     text: {
         medium: {fontSize: 24},
-        large: {fontSize: 32},
+        large: {fontSize: 52},
     }
 }
 
@@ -29,9 +29,9 @@ export function Avatar({ image, name, variant="medium" }: Props){
     <View>
         { image? (
             <Image source={image} style={variants.size[variant]} />
-            ) :(
-                <View style={styles.letter}>
-                    <Text style={variants.text[variant]}>{name[0].toUpperCase()}
+            ) : (
+                <View style={[styles.letter, variants.size[variant]]}>
+                    <Text style={[styles.text, variants.text[variant]]}>{name[0].toUpperCase()}
                     </Text>
                 </View>
             )}
