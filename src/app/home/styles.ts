@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { theme } from "@/theme/index"
 
 export const styles = StyleSheet.create({
@@ -26,5 +26,10 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
         borderRadius: 12,
+    },
+    contentList: {
+        padding: 24,
+        gap: 12,
+        paddingTop: 64,
     },
 })

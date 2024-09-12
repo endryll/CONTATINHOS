@@ -1,7 +1,8 @@
-import { Alert, View, SectionList } from "react-native"
+import { Alert, View, SectionList, Text } from "react-native"
 import { Feather } from '@expo/vector-icons'
 import * as Contacts from 'expo-contacts'
 import { styles } from './styles'
+
 import { Input } from "@/app/components/input"
 import { theme } from "@/theme"
 import { useState, useEffect } from "react"
@@ -12,10 +13,11 @@ type SectionListDataProps = {
     data: ContactProps
 }
 
-const [contact, setContacts] = useState<SectionListDataProps[]>([])
+const [contacts, setContacts] = useState<SectionListDataProps[]>([])
 
 export function Home(){
     const [contacts, setContacts] = useState([])
+    const [name, setName] = useState ("")
 
     async function fetchContacts() {
         try {
@@ -24,7 +26,6 @@ export function Home(){
                 const { data } = await Contacts.getContactsAsync()
                 console.log(data)
             }
-
         } catch(error) {
             console.log(error)
             Alert.alert("Contatos", "Não foi possível carregar os contatos...")
@@ -34,6 +35,7 @@ export function Home(){
     useEffect(() => {
         fetchContacts()
     },[])
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -53,13 +55,15 @@ export function Home(){
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <Contact contact={{
-                        name: "Roberto",
+                        name: item.name,
                         image: require("@/assets/avatar.jpeg")
-                    }} />    
+                        }} 
+                    />    
                 )}
-                renderSectionHeader = {({ section }) => (<Text style={styles.section}>{section.title}</Text>)}
+                renderSectionHeader = {({ section }) => 
+                    (<Text style={styles.section}>{section.title}</Text>)}
                 contentContainerStyle = {styles.contentList}
-            />
+                />
         </View>
     )
 }
